@@ -1,10 +1,12 @@
 # Blazing Fast URL Shortener
 
-A high-performance URL shortener built with Rust, featuring clean architecture, efficient storage, and robust error handling.
+A high-performance URL shortener built with Rust and Next.js, featuring clean architecture, efficient storage, modern UI, and robust security.
 
 ## Features
 
-- ⚡ High-performance URL shortening
+- ⚡ High-performance URL shortening with Rust backend
+- 🎨 Modern, responsive UI built with Next.js and Tailwind CSS
+- 🔐 Secure URL encryption
 - 🔄 Concurrent request handling
 - 💾 Persistent storage using Sled embedded database
 - ✨ Clean architecture with proper separation of concerns
@@ -16,24 +18,95 @@ A high-performance URL shortener built with Rust, featuring clean architecture, 
 
 ## Architecture
 
-The project follows clean architecture principles with the following components:
+The project follows a full-stack architecture with separate frontend and backend components:
 
-### Core Components
+### Backend Components (Rust)
 
 - **Handlers**: HTTP request handlers
 - **Services**: Business logic layer
 - **Repositories**: Data access layer
 - **Middleware**: Request validation and processing
 
+### Frontend Components (Next.js)
+
+- **Pages**: Next.js pages and routing
+- **Components**: Reusable UI components
+- **Styles**: Tailwind CSS styling
+- **API**: Frontend-backend integration
+
 ### Directory Structure
 ```
-src/
-├── handlers/       # HTTP request handlers
-├── services/      # Business logic
-├── repositories/  # Data access layer
-├── middleware/    # Request middleware
-├── config.rs      # Configuration management
-└── main.rs        # Application entry point
+├── frontend/           # Next.js frontend application
+│   ├── src/           # Frontend source code
+│   ├── public/        # Static assets
+│   └── ...           # Frontend configuration files
+├── src/               # Rust backend
+│   ├── handlers/     # HTTP request handlers
+│   ├── services/     # Business logic
+│   ├── repositories/ # Data access layer
+│   ├── middleware/   # Request middleware
+│   ├── config.rs     # Configuration management
+│   └── main.rs       # Application entry point
+└── encryption.key    # Encryption key for URL security
+```
+
+## Backend Dependencies
+
+Core backend dependencies:
+- `actix-web`: Web framework with macros support
+- `actix-cors`: CORS middleware
+- `sled`: Embedded database
+- `nanoid`: URL shortening
+- `url`: URL validation
+- `serde`: Serialization
+- `tokio`: Async runtime
+- `tracing`: Logging system
+- `ring`: Cryptography
+- `base64`: Encoding
+
+## Frontend Dependencies
+
+Core frontend dependencies:
+- Next.js 14
+- React
+- Tailwind CSS
+- TypeScript
+- ESLint
+
+## Getting Started
+
+### Prerequisites
+- Rust 1.70 or higher
+- Node.js 18 or higher
+- npm or yarn
+
+### Backend Setup
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/blazing-fast-url-shortner.git
+cd blazing-fast-url-shortner
+
+# Build the backend
+cargo build --release
+
+# Run the backend
+cargo run
+```
+
+### Frontend Setup
+```bash
+# Navigate to frontend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# For production build
+npm run build
+npm start
 ```
 
 ## API Endpoints
@@ -106,54 +179,6 @@ Minimal set of core dependencies:
 - `serde`: Serialization
 - `tokio`: Async runtime
 - `tracing`: Basic logging
-
-## Getting Started
-
-### Prerequisites
-- Rust 1.70 or higher
-- Cargo package manager
-
-### Installation
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/blazing-fast-url-shortner.git
-cd blazing-fast-url-shortner
-
-# Build the project
-cargo build --release
-```
-
-### Running
-```bash
-cargo run
-```
-
-### Usage Examples
-
-#### PowerShell
-```powershell
-# Create a short URL
-$body = @{url = 'https://github.com'} | ConvertTo-Json
-Invoke-WebRequest -Method POST -Uri 'http://localhost:8080/api/v1/shorten' -ContentType 'application/json' -Body $body | Select-Object -Expand Content | ConvertFrom-Json
-
-# Access shortened URL
-Invoke-WebRequest -Method GET -Uri "http://localhost:8080/{short_code}" -MaximumRedirection 0
-
-# Check health
-Invoke-WebRequest -Method GET -Uri "http://localhost:8080/api/v1/health" | Select-Object -Expand Content | ConvertFrom-Json
-```
-
-#### cURL
-```bash
-# Create a short URL
-curl -X POST -H "Content-Type: application/json" -d '{"url":"https://github.com"}' http://localhost:8080/api/v1/shorten
-
-# Access shortened URL
-curl -I http://localhost:8080/{short_code}
-
-# Check health
-curl http://localhost:8080/api/v1/health
-```
 
 ## Error Handling
 
