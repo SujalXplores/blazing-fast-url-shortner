@@ -1,0 +1,7 @@
+/target/
+**/*.rs.bk
+url_db/
+.env
+*.pdb
+*.log
+encryption.key
